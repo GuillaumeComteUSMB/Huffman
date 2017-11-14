@@ -1,6 +1,8 @@
 //===== INCLUDEs ===============================================================
 #include "Global.h"
 #include "stdlib.h"
+#include "stdio.h"
+#include "API_Occ.h"
 
 //===== DEFINEs ================================================================
 
@@ -57,6 +59,39 @@ int ApiOccDetermineNumberChar( void)
     }
 
     return( counter);
+}
+
+/*******************************************************************************
+*  \!brief Determine the two most smaller int in a table
+*
+* Return int
+*
+*******************************************************************************/
+sAPI_LOWEST_INT ApiOccFindTwoSmallerInt( void)
+{
+    int iteration = 0;
+
+    sAPI_LOWEST_INT OccAnalyze;
+    OccAnalyze.indice1 = 0;
+    OccAnalyze.indice2 = 0;
+    OccAnalyze.lowest_number1 = 65535;
+    OccAnalyze.lowest_number2 = 65535;
+
+    for( iteration = 0; iteration < NB_CARACTERES_ASCII; iteration++)
+    {
+        if(( Occ[iteration]<= OccAnalyze.lowest_number1)&&( Occ[iteration]>0))
+        {
+            OccAnalyze.lowest_number2 = OccAnalyze.lowest_number1;
+            OccAnalyze.lowest_number1 = Occ[iteration];
+
+            OccAnalyze.indice2 = OccAnalyze.indice1;
+            OccAnalyze.indice1 = iteration;
+        }
+    }
+
+    printf("\n***Debug***");
+
+    return(OccAnalyze);
 }
 
 //===== END OF FILE ============================================================

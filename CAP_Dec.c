@@ -14,8 +14,8 @@ void CapDecompressFile(int *input_path, int *output_path);
 
 void CapDecompressFile(int *input_path, int *output_path)
 {
-   (void)input_path;
-   (void)output_path;
+   ( void)input_path;
+   ( void)output_path;
 }
 
 //===== END OF FILE ============================================================
