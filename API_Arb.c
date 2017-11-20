@@ -1,19 +1,11 @@
 //===== INCLUDEs ===============================================================
 #include "Global.h"
 #include "stdlib.h"
+#include "API_Arb.h"
 
 //===== DEFINEs ================================================================
 
 //===== TYPEDEFs, STRUCTs, ENUMs ===============================================
-struct noeud
-{
-    char                carac;
-    unsigned int        occ;
-    int                 code;
-    int                 bits;
-    struct noeud        *gauche;
-    struct noeud        *droite;
-};
 
 //===== VARIABLEs ==============================================================
 struct noeud* Arb[NB_CARACTERES_ASCII] = {0};
@@ -49,6 +41,23 @@ struct noeud* ApiArbCreateLeaf( int* Occ, int index)
 
     return( leaf);
 }
+
+/*******************************************************************************
+*  \!brief Create a Node
+*
+* Return None
+*
+*******************************************************************************/
+/*void ApiArbCreateNode( struct noeud* Arb[], int size)
+{
+    int iteration = 0;
+
+    for( iteration = 0, iteration < size, iteration++)
+    {
+        Arb[iteration]
+    }
+}
+*/
 
 //===== END OF FILE ============================================================
 

@@ -3,6 +3,7 @@
 #include "stdlib.h"
 #include "stdio.h"
 #include "API_Occ.h"
+#include "API_Arb.h"
 
 //===== DEFINEs ================================================================
 
@@ -13,10 +14,12 @@
 //===== PROTOTYPEs =============================================================
 void ApiOccClassiOccurences( char CaractereLu);
 int ApiOccDetermineNumberChar( void);
+sAPI_LOWEST_INT ApiOccFindTwoSmallerInt( struct noeud* Arb[], int size);
 
 //===== VARIABLEs ==============================================================
 int Occ[NB_CARACTERES_ASCII] = {0};
 char Car[NB_CARACTERES_ASCII] = {'\0'};
+extern struct noeud* Arb[];
 
 //===== FUNCTIONs ==============================================================
 
@@ -28,7 +31,9 @@ char Car[NB_CARACTERES_ASCII] = {'\0'};
 *******************************************************************************/
 void ApiOccClassiOccurences( char CaractereLu)
 {
-   Occ[ CaractereLu] = Occ[ CaractereLu] + 1 ;
+    int index;
+    index = (int)CaractereLu;
+    Occ[ index] = Occ[ index] + 1 ;
 }
 
 /*******************************************************************************
@@ -67,7 +72,7 @@ int ApiOccDetermineNumberChar( void)
 * Return int
 *
 *******************************************************************************/
-sAPI_LOWEST_INT ApiOccFindTwoSmallerInt( void)
+sAPI_LOWEST_INT ApiOccFindTwoSmallerInt( struct noeud* Arb[], int size)
 {
     int iteration = 0;
 
@@ -77,12 +82,12 @@ sAPI_LOWEST_INT ApiOccFindTwoSmallerInt( void)
     OccAnalyze.lowest_number1 = 65535;
     OccAnalyze.lowest_number2 = 65535;
 
-    for( iteration = 0; iteration < NB_CARACTERES_ASCII; iteration++)
+    for( iteration = 0; iteration < size; iteration++)
     {
-        if(( Occ[iteration]<= OccAnalyze.lowest_number1)&&( Occ[iteration]>0))
+        if(( Arb[iteration]->occ <= OccAnalyze.lowest_number1)&&( Arb[iteration]->occ > 0))
         {
             OccAnalyze.lowest_number2 = OccAnalyze.lowest_number1;
-            OccAnalyze.lowest_number1 = Occ[iteration];
+            OccAnalyze.lowest_number1 = Arb[iteration]->occ;
 
             OccAnalyze.indice2 = OccAnalyze.indice1;
             OccAnalyze.indice1 = iteration;

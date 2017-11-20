@@ -12,6 +12,7 @@
 //===== VARIABLEs ==============================================================
 extern char Car[NB_CARACTERES_ASCII];
 extern int Occ[NB_CARACTERES_ASCII];
+extern struct noeud* Arb[NB_CARACTERES_ASCII];
 
 //===== PROTOTYPEs =============================================================
 void CapCompressFile(char output_path[], char input_path[]);
@@ -29,13 +30,14 @@ void CapCompressFile(char output_path[], char input_path[])
 
     // Determine number of caracteres
     nb_carac = ApiOccDetermineNumberChar();
-    OccAnalyze = ApiOccFindTwoSmallerInt();
 
     for ( iteration = 0 ; iteration < nb_carac ; iteration++)
     {
         generic_node = ApiArbCreateLeaf( Occ, Car[iteration]);
         printf("\nAdresse Mémoire de structure créée : %x", generic_node);
     }
+
+    OccAnalyze = ApiOccFindTwoSmallerInt( Arb, nb_carac);
 
     ( void)output_path;
 }
