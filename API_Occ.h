@@ -10,10 +10,10 @@
 //===== TYPEDEFs, STRUCTs, ENUMs ===============================================
 typedef struct
 {
-    int indice1;
-    unsigned int lowest_number1;
-    int indice2;
-    unsigned int lowest_number2;
+    int             indice1;
+    unsigned int    lowest_number1;
+    int             indice2;
+    unsigned int    lowest_number2;
 }sAPI_LOWEST_INT;
 
 //===== VARIABLEs ==============================================================

@@ -38,6 +38,7 @@ void CapCompressFile(char output_path[], char input_path[])
     }
 
     OccAnalyze = ApiOccFindTwoSmallerInt( Arb, nb_carac);
+    printf("\n***debug*** OccAnalyze = %d", OccAnalyze.lowest_number1);
 
     ( void)output_path;
 }
