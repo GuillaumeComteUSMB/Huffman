@@ -21,7 +21,7 @@ typedef struct
 //===== PROTOTYPEs =============================================================
 void ApiOccClassiOccurences( char CaractereLu);
 int ApiOccDetermineNumberChar( void);
-sAPI_LOWEST_INT ApiOccFindTwoSmallerInt( struct noeud* Arb[], int size);
+sAPI_LOWEST_INT ApiOccFindTwoSmallerInt( struct noeud* Arb, int size);
 
 //===== END OF FILE ============================================================
 

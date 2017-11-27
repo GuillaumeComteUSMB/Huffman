@@ -14,7 +14,7 @@
 //===== PROTOTYPEs =============================================================
 void ApiOccClassiOccurences( char CaractereLu);
 int ApiOccDetermineNumberChar( void);
-sAPI_LOWEST_INT ApiOccFindTwoSmallerInt( struct noeud* Arb[], int size);
+sAPI_LOWEST_INT ApiOccFindTwoSmallerInt( struct noeud* Arb, int size);
 
 //===== VARIABLEs ==============================================================
 int Occ[NB_CARACTERES_ASCII] = {0};
@@ -72,7 +72,7 @@ int ApiOccDetermineNumberChar( void)
 * Return int
 *
 *******************************************************************************/
-sAPI_LOWEST_INT ApiOccFindTwoSmallerInt( struct noeud* Arb[], int size)
+sAPI_LOWEST_INT ApiOccFindTwoSmallerInt( struct noeud* Arb, int size)
 {
     int iteration = 0;
 
@@ -84,10 +84,12 @@ sAPI_LOWEST_INT ApiOccFindTwoSmallerInt( struct noeud* Arb[], int size)
 
     for( iteration = 0; iteration < size; iteration++)
     {
-        if(( Arb[iteration]->occ <= OccAnalyze.lowest_number1)&&( Arb[iteration]->occ > 0))
+        printf("\n***debug*** occ : %d", Arb[iteration].occ);
+
+        if(( Arb[iteration].occ <= OccAnalyze.lowest_number1)&&( Arb[iteration].occ > 0))
         {
             OccAnalyze.lowest_number2 = OccAnalyze.lowest_number1;
-            OccAnalyze.lowest_number1 = Arb[iteration]->occ;
+            OccAnalyze.lowest_number1 = Arb[iteration].occ;
 
             OccAnalyze.indice2 = OccAnalyze.indice1;
             OccAnalyze.indice1 = iteration;
