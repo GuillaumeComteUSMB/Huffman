@@ -14,7 +14,7 @@ struct noeud* Arb[NB_CARACTERES_ASCII] = {0};
 
 //===== PROTOTYPEs =============================================================
 struct noeud* ApiArbCreateLeaf( int* Occ, int index);
-void ApiArbCreateNode( struct noeud* Arb, int size);
+void ApiArbCreateNode( struct noeud* Arb[], int size);
 void ApiArbSortLeaf( int size);
 
 //===== FUNCTIONs ==============================================================
@@ -91,10 +91,12 @@ void ApiArbSortLeaf( int size)
 * Return None
 *
 *******************************************************************************/
-void ApiArbCreateNode( struct noeud* Arb, int size)
+void ApiArbCreateNode( struct noeud* Arb[], int size)
 {
     int iteration = 0;
     sAPI_LOWEST_INT OccAnalyze = {0};
+
+    int old_node_index = NULL;
 
     // nombre de noeuds = nombre de caracteres - 1
     for( iteration = 0; iteration < size-1; iteration++)
@@ -103,20 +105,29 @@ void ApiArbCreateNode( struct noeud* Arb, int size)
 
         if( ( OccAnalyze.indice1!=0)&&( OccAnalyze.indice2!=0))
         {
-            Arb[iteration].carac  = NULL;
-            Arb[iteration].occ    = OccAnalyze.lowest_number1 + OccAnalyze.lowest_number2;
-            Arb[iteration].code   = NULL;
-            Arb[iteration].bits   = NULL;
-            Arb[iteration].gauche = &Arb[ OccAnalyze.indice1];
-            Arb[iteration].droite = &Arb[ OccAnalyze.indice2];
+            Arb[ OccAnalyze.indice2]->carac  = '!';
+            Arb[ OccAnalyze.indice2]->occ    = OccAnalyze.lowest_number1 + OccAnalyze.lowest_number2;
+            Arb[ OccAnalyze.indice2]->code   = NULL;
+            Arb[ OccAnalyze.indice2]->bits   = NULL;
+            Arb[ OccAnalyze.indice2]->gauche = &Arb[ OccAnalyze.indice1];
+            Arb[ OccAnalyze.indice2]->droite = &Arb[ OccAnalyze.indice2];
+
+            if( old_node_index == NULL)
+            {
+                // do nothing, first node created
+            }
+            else
+            {
+                Arb[ old_node_index]->carac = NULL;
+            }
+
+            old_node_index = OccAnalyze.indice2;
         }
         else
         {
             //do nothing
         }
     }
-
-
 
 }
 

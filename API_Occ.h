@@ -4,6 +4,7 @@
 //===== INCLUDEs ===============================================================
 #include <stdlib.h>
 #include "API_Arb.h"
+#include "Global.h"
 
 //===== DEFINEs ================================================================
 
@@ -21,7 +22,7 @@ typedef struct
 //===== PROTOTYPEs =============================================================
 void ApiOccClassiOccurences( char CaractereLu);
 int ApiOccDetermineNumberChar( void);
-sAPI_LOWEST_INT ApiOccFindTwoSmallerInt( struct noeud* Arb, int size);
+sAPI_LOWEST_INT ApiOccFindTwoSmallerInt( struct noeud* Arb[], int size);
 
 //===== END OF FILE ============================================================
 

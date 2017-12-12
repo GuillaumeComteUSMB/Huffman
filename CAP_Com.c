@@ -39,8 +39,7 @@ void CapCompressFile(char output_path[], char input_path[])
 
     ApiArbSortLeaf( nb_carac);
 
-    OccAnalyze = ApiOccFindTwoSmallerInt( Arb, nb_carac);
-    printf("\n***debug*** OccAnalyze = %d", OccAnalyze.lowest_number1);
+    ApiArbCreateNode( Arb, nb_carac);
 
     ( void)output_path;
 }
