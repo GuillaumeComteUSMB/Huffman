@@ -37,6 +37,8 @@ void CapCompressFile(char output_path[], char input_path[])
         printf("\nAdresse Mémoire de structure créée : %x", generic_node);
     }
 
+    ApiArbSortLeaf( nb_carac);
+
     OccAnalyze = ApiOccFindTwoSmallerInt( Arb, nb_carac);
     printf("\n***debug*** OccAnalyze = %d", OccAnalyze.lowest_number1);
 

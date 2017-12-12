@@ -21,6 +21,7 @@ struct noeud
 //===== PROTOTYPEs =============================================================
 struct noeud* ApiArbCreateLeaf( int* Occ, int index);
 void ApiArbCreateNode(struct noeud *Arb, int size);
+void ApiArbSortLeaf( int size);
 
 //===== END OF FILE ============================================================
 

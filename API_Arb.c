@@ -1,6 +1,7 @@
 //===== INCLUDEs ===============================================================
 #include "Global.h"
 #include "stdlib.h"
+#include "stdio.h"
 #include "API_Arb.h"
 #include "API_Occ.h"
 
@@ -14,7 +15,7 @@ struct noeud* Arb[NB_CARACTERES_ASCII] = {0};
 //===== PROTOTYPEs =============================================================
 struct noeud* ApiArbCreateLeaf( int* Occ, int index);
 void ApiArbCreateNode( struct noeud* Arb, int size);
-void ApiArbSortLeaf( void);
+void ApiArbSortLeaf( int size);
 
 //===== FUNCTIONs ==============================================================
 
@@ -27,6 +28,7 @@ void ApiArbSortLeaf( void);
 struct noeud* ApiArbCreateLeaf( int* Occ, int index)
 {
     struct noeud* leaf = 0;
+    static int num_carac = 0;
 
     // Reservation of memory space to stock each struct
     leaf = malloc(sizeof(struct noeud));
@@ -40,7 +42,12 @@ struct noeud* ApiArbCreateLeaf( int* Occ, int index)
     leaf->droite = NULL;
 
     // Reservation of memory space to stock each struct
-    Arb[index] = leaf;
+    Arb[num_carac] = leaf;
+    printf("\n***debug*** creation feuille : adress %x ", Arb[num_carac]);
+    printf("\n***debug*** numero de feuille creee : %d", num_carac);
+    printf("\n***debug*** caractere de la feuille creee : %c", Arb[num_carac]->carac);
+
+    num_carac = num_carac + 1;
 
     return( leaf);
 }
@@ -51,9 +58,31 @@ struct noeud* ApiArbCreateLeaf( int* Occ, int index)
 * Return None
 *
 *******************************************************************************/
-void ApiArbSortLeaf( void)
+void ApiArbSortLeaf( int size)
 {
+    //tab containing address of all leafs : arb[]
+   struct noeud* temp; //temporary stock address
+   int i = 0;
 
+   for(i = 0; i < size; i++)
+   {
+       printf("\n***debug*** caractere trie : %c", Arb[i]->carac);
+       if(i == (size-1))
+       {
+           // do nothing, we are on last leaf
+       }
+       else if(Arb[i]->occ > Arb[i+1]->occ)
+       {
+           temp = Arb[i+1];
+           Arb[i+1] = Arb[i];
+           Arb[i] = temp;
+       }
+   }
+   for(i = 0; i < size; i++)
+   {
+       printf("\n[API_Arb.c]\t carac : %c", Arb[i]->carac);
+       printf("\n[API_Arb.c]\t occurence carac : %d", Arb[i]->occ);
+   }
 }
 
 /*******************************************************************************
@@ -65,16 +94,14 @@ void ApiArbSortLeaf( void)
 void ApiArbCreateNode( struct noeud* Arb, int size)
 {
     int iteration = 0;
-    int indice = 0;
     sAPI_LOWEST_INT OccAnalyze = {0};
-    struct noeud temp = {0};
 
     // nombre de noeuds = nombre de caracteres - 1
     for( iteration = 0; iteration < size-1; iteration++)
     {
         OccAnalyze = ApiOccFindTwoSmallerInt( Arb, size);
 
-        if( ( OccAnalyze.indice1!=0)&&( OccAnalyze.indice2!=0)
+        if( ( OccAnalyze.indice1!=0)&&( OccAnalyze.indice2!=0))
         {
             Arb[iteration].carac  = NULL;
             Arb[iteration].occ    = OccAnalyze.lowest_number1 + OccAnalyze.lowest_number2;
