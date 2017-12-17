@@ -16,6 +16,8 @@ struct noeud* Arb[NB_CARACTERES_ASCII] = {0};
 struct noeud* ApiArbCreateLeaf( int* Occ, int index);
 void ApiArbCreateNode( struct noeud* Arb[], int size);
 void ApiArbSortLeaf( int size);
+struct noeud* ApiArbFindSquare(struct noeud* Arb[], int size);
+void ApiArbCreateCode( struct noeud* element, int code, int niveau);
 
 //===== FUNCTIONs ==============================================================
 
@@ -103,7 +105,7 @@ void ApiArbCreateNode( struct noeud* Arb[], int size)
     {
         OccAnalyze = ApiOccFindTwoSmallerInt( Arb, size);
 
-        if( ( OccAnalyze.indice1!=0)&&( OccAnalyze.indice2!=0))
+        if( ( OccAnalyze.indice1!=65535)&&( OccAnalyze.indice2!=65535))
         {
             Arb[ OccAnalyze.indice2]->carac  = '!';
             Arb[ OccAnalyze.indice2]->occ    = OccAnalyze.lowest_number1 + OccAnalyze.lowest_number2;
@@ -129,6 +131,56 @@ void ApiArbCreateNode( struct noeud* Arb[], int size)
         }
     }
 
+}
+
+/*******************************************************************************
+*  \!brief Create Code of each caracteres
+*
+* Return None
+*
+*******************************************************************************/
+void ApiArbCreateCode( struct noeud* element, int code, int niveau)
+{
+    if(( element->droite == NULL)&&( element->gauche == NULL))
+    {
+        // We are on a leaf
+        element->bits = niveau;
+        element->code = code;
+        printf("\n***debug*** %c\t %d", element->carac, element->occ);
+    }
+    else
+    {
+        // Others Paths
+        // Go right (0 injection)
+        ApiArbCreateCode( element->droite, code<<1, niveau+1);
+
+        // Go left
+        ApiArbCreateCode( element->gauche, (code<<1)+1, niveau+1);
+    }
+}
+
+/*******************************************************************************
+*  \!brief Find '!' Node
+*
+* Return None
+*
+*******************************************************************************/
+struct noeud* ApiArbFindSquare(struct noeud* Arb[], int size)
+{
+    int iteration = 0;
+
+    for( iteration = 0; iteration<size; iteration++)
+    {
+        if( Arb[ iteration]->carac == '!')
+        {
+            return(Arb[ iteration]);
+        }
+        else
+        {
+            // do nothing, wait the ! node
+        }
+    }
+    return(NULL);
 }
 
 

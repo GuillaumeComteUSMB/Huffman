@@ -22,6 +22,8 @@ struct noeud
 struct noeud* ApiArbCreateLeaf( int* Occ, int index);
 void ApiArbCreateNode(struct noeud *Arb[], int size);
 void ApiArbSortLeaf( int size);
+struct noeud* ApiArbFindSquare(struct noeud* Arb[], int size);
+void ApiArbCreateCode( struct noeud* element, int code, int niveau);
 
 //===== END OF FILE ============================================================
 

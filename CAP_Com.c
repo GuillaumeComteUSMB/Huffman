@@ -41,6 +41,17 @@ void CapCompressFile(char output_path[], char input_path[])
 
     ApiArbCreateNode( Arb, nb_carac);
 
+    generic_node = ApiArbFindSquare( Arb, nb_carac);
+
+    if( generic_node == NULL)
+    {
+        printf("\n***debug*** Erreur: pas de noeud trouver en tant que racine");
+    }
+    else
+    {
+        ApiArbCreateCode( generic_node, 0, 0);
+    }
+
     ( void)output_path;
 }
 

@@ -77,8 +77,8 @@ sAPI_LOWEST_INT ApiOccFindTwoSmallerInt( struct noeud* Arb[], int size)
     int iteration = 0;
 
     sAPI_LOWEST_INT OccAnalyze;
-    OccAnalyze.indice1 = 0;
-    OccAnalyze.indice2 = 0;
+    OccAnalyze.indice1 = 65535;
+    OccAnalyze.indice2 = 65535;
     OccAnalyze.lowest_number1 = 65535;
     OccAnalyze.lowest_number2 = 65535;
 
