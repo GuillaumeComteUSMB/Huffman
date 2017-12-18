@@ -13,6 +13,7 @@
 extern char Car[NB_CARACTERES_ASCII];
 extern int Occ[NB_CARACTERES_ASCII];
 extern struct noeud* Arb[NB_CARACTERES_ASCII];
+extern struct noeud* alphabet[NB_CARACTERES_ASCII];
 
 //===== PROTOTYPEs =============================================================
 void CapCompressFile(char output_path[], char input_path[]);
@@ -23,6 +24,7 @@ void CapCompressFile(char output_path[], char input_path[])
     int iteration = 0;
     int nb_carac = 0;
     int new_size = 0;
+    int ret = 0;
     struct noeud* generic_node;
     //sAPI_LOWEST_INT OccAnalyze = {0};
 
@@ -57,7 +59,15 @@ void CapCompressFile(char output_path[], char input_path[])
         ApiArbCreateCode( Arb[0], 0, 0);
     }
 
-    ( void)output_path;
+    ret = ApiFilLeadingCreation( alphabet, output_path, nb_carac);
+    if( ret == 0)
+    {
+        printf("\n***debug*** writed Leading");
+    }
+    else
+    {
+        printf("\n***debug*** Error in writing file");
+    }
 }
 
 //===== END OF FILE ============================================================

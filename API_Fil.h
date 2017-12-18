@@ -11,6 +11,7 @@
 
 //===== PROTOTYPEs =============================================================
 void ApiFilReadFile(char input_path[]);
+int ApiFilLeadingCreation( struct noeud* alphabet[], char output_path[], int nb_carac);
 
 //===== FUNCTIONs ==============================================================
 

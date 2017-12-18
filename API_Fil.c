@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "API_Occ.h"
+#include "API_Arb.h"
 
 //===== DEFINEs ================================================================
 
@@ -11,6 +12,7 @@
 
 //===== PROTOTYPEs =============================================================
 void ApiFilReadFile(char input_path[]);
+int ApiFilLeadingCreation( struct noeud* alphabet[], char output_path[], int nb_carac);
 
 //===== FUNCTIONs ==============================================================
 
@@ -50,6 +52,55 @@ void ApiFilReadFile(char input_path[])
    printf( "\n[\033[33m Info \033[37m]\tNombre de Caractères  : %d", counter);
 
    fclose( fichier);
+}
+
+/*******************************************************************************
+*  \!brief Leading Creation
+*
+* Return None
+*
+*******************************************************************************/
+int ApiFilLeadingCreation( struct noeud* alphabet[], char output_path[], int nb_carac)
+{
+    int iteration = 0;
+    FILE* fichier = NULL;
+
+    fichier = fopen( output_path, "w");
+    if( fichier != NULL)
+    {
+        // We can write in file
+        for( iteration = 0; iteration < NB_CARACTERES_ASCII-1; iteration++)
+        {
+            if( iteration == 0)
+            {
+                fputc( nb_carac, fichier);
+            }
+            else
+            {
+                if( alphabet[ iteration-1] != NULL)
+                {
+                    fputc( alphabet[ iteration-1]->bits, fichier);
+                    fputc( alphabet[ iteration-1]->code, fichier);
+                }
+                else
+                {
+                    fputc( 0, fichier);
+                    fputc( 0, fichier);
+                }
+
+            }
+        }
+    }
+    else
+    {
+        printf("\n[Erreur]\t Impossible d'ouvrir le fichier %s", output_path);
+        return( -1);
+    }
+
+    fclose(fichier);
+
+
+    return(0);
 }
 
 //===== END OF FILE ============================================================

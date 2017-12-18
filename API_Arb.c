@@ -11,6 +11,7 @@
 
 //===== VARIABLEs ==============================================================
 struct noeud* Arb[NB_CARACTERES_ASCII] = {0};
+struct noeud* alphabet[NB_CARACTERES_ASCII] = {0};
 
 //===== PROTOTYPEs =============================================================
 struct noeud* ApiArbCreateLeaf( int* Occ, int index);
@@ -196,6 +197,9 @@ void ApiArbCreateCode( struct noeud* element, int code, int niveau)
         element->bits = niveau;
         element->code = code;
         printf("\n***debug*** %c\t %d", element->carac, element->occ);
+
+        // Save address of leaf
+        alphabet[ element->carac] = element;
     }
     else
     {
@@ -206,30 +210,6 @@ void ApiArbCreateCode( struct noeud* element, int code, int niveau)
         // Go left
         ApiArbCreateCode( element->gauche, (code<<1)+1, niveau+1);
     }
-}
-
-/*******************************************************************************
-*  \!brief Find '!' Node
-*
-* Return index of Arb[] where is the node
-*
-*******************************************************************************/
-int ApiArbFindRoot(struct noeud* Arb[], int size)
-{
-    int iteration = 0;
-
-    for( iteration = 0; iteration<size; iteration++)
-    {
-        if( Arb[ iteration]->carac == '!')
-        {
-            return( iteration);
-        }
-        else
-        {
-            // do nothing, wait the ! node
-        }
-    }
-    return(-1); // Error
 }
 
 
