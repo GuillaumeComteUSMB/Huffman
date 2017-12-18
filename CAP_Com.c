@@ -22,9 +22,9 @@ void CapCompressFile(char output_path[], char input_path[])
 {
     int iteration = 0;
     int nb_carac = 0;
-    int ret = 0;
-    struct noeud* generic_node = NULL;
-    sAPI_LOWEST_INT OccAnalyze = {0};
+    int new_size = 0;
+    struct noeud* generic_node;
+    //sAPI_LOWEST_INT OccAnalyze = {0};
 
     // Reading of input file, Occurences classification
     ApiFilReadFile( input_path);
@@ -40,17 +40,21 @@ void CapCompressFile(char output_path[], char input_path[])
 
     ApiArbSortLeaf( nb_carac);
 
-    ApiArbCreateNode( Arb, nb_carac);
+    // Initialization of new_size of Arb
+    new_size = nb_carac;
 
-    ret = ApiArbFindSquare( Arb, nb_carac);
+    for( iteration = 0 ; iteration < nb_carac-1 ; iteration++)
+    {
+        new_size = ApiArbCreateNode( Arb, new_size, nb_carac);
+    }
 
-    if( ret < 0)
+    if( Arb[ 0]->carac != '!')
     {
         printf("\n***debug*** Erreur: pas de noeud trouver en tant que racine");
     }
     else
     {
-        ApiArbCreateCode( Arb[ret], 0, 0);
+        ApiArbCreateCode( Arb[0], 0, 0);
     }
 
     ( void)output_path;

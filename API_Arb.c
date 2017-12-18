@@ -14,11 +14,12 @@ struct noeud* Arb[NB_CARACTERES_ASCII] = {0};
 
 //===== PROTOTYPEs =============================================================
 struct noeud* ApiArbCreateLeaf( int* Occ, int index);
-void ApiArbCreateNode( struct noeud* Arb[], int size);
+int ApiArbCreateNode( struct noeud* Arb[], int new_size, int size);
 void ApiArbSortLeaf( int size);
-int ApiArbFindSquare(struct noeud* Arb[], int size);
+int ApiArbFindRoot(struct noeud* Arb[], int size);
 void ApiArbCreateCode( struct noeud* element, int code, int niveau);
 void ApiArbSortArb( int size);
+int ApiArbDeleteAndShift( int size);
 
 //===== FUNCTIONs ==============================================================
 
@@ -46,9 +47,9 @@ struct noeud* ApiArbCreateLeaf( int* Occ, int index)
 
     // Reservation of memory space to stock each struct
     Arb[num_carac] = leaf;
-    printf("\n***debug*** leaf creation : adress %x ", Arb[num_carac]);
-    printf("\n***debug*** ID of created leaf : %d", num_carac);
-    printf("\n***debug*** leaf 's caractere : %c", Arb[num_carac]->carac);
+    //printf("\n***debug*** leaf creation : adress %x ", Arb[num_carac]);
+    //printf("\n***debug*** ID of created leaf : %d", num_carac);
+    //printf("\n***debug*** leaf 's caractere : %c", Arb[num_carac]->carac);
 
     num_carac = num_carac + 1;
 
@@ -122,66 +123,63 @@ void ApiArbSortArb( int size)
 }
 
 /*******************************************************************************
+*  \!brief Delete and Shift of One case
+*
+* Return None
+*
+*******************************************************************************/
+int ApiArbDeleteAndShift( int size)
+{
+    int iteration = 1;
+
+    for( iteration = 1; iteration < size-1; iteration++)
+    {
+        Arb[ iteration] = Arb[ iteration + 1];
+    }
+    return( size-1);
+}
+
+/*******************************************************************************
 *  \!brief Create a Node
 *
 * Return None
 *
 *******************************************************************************/
-void ApiArbCreateNode( struct noeud* Arb[], int size)
+int ApiArbCreateNode( struct noeud* Arb[], int new_size, int size)
 {
-    int iteration = 0;
-    sAPI_LOWEST_INT OccAnalyze = {0};
-    struct noeud tmp = {0};
+    static int iteration = 0;
 
-    int old_node_index = NULL;
+    struct noeud* temp = malloc(sizeof(struct noeud));
 
-    // nombre de noeuds = nombre de caracteres - 1
-    for( iteration = 0; iteration < size-1; iteration++)
+    // Sort tab
+    ApiArbSortArb( new_size);
+
+    if( iteration == ( size - 2))
     {
-
-        if( old_node_index == NULL)
-        {
-            // do nothing, first node created
-        }
-        else
-        {
-            Arb[ old_node_index]->carac = NULL;
-        }
-
-        ApiArbSortArb( size);
-        OccAnalyze = ApiOccFindTwoSmallerInt( Arb, size);
-
-        if( ( OccAnalyze.indice1!=65535)&&( OccAnalyze.indice2!=65535))
-        {
-            /*
-            Arb[ OccAnalyze.indice2]->carac  = '!';
-            Arb[ OccAnalyze.indice2]->occ    = OccAnalyze.lowest_number1 + OccAnalyze.lowest_number2;
-            Arb[ OccAnalyze.indice2]->code   = NULL;
-            Arb[ OccAnalyze.indice2]->bits   = NULL;
-            Arb[ OccAnalyze.indice2]->gauche = &Arb[ OccAnalyze.indice1];
-            Arb[ OccAnalyze.indice2]->droite = &Arb[ OccAnalyze.indice2];
-            */
-
-            tmp.carac   = '!';
-            tmp.occ     = OccAnalyze.lowest_number1 + OccAnalyze.lowest_number2;
-            tmp.code    = NULL;
-            tmp.bits    = NULL;
-            tmp.gauche  = &Arb[ OccAnalyze.indice1];        // save caractere's address
-            tmp.droite  = &Arb[ OccAnalyze.indice2];        // save caractere's address
-
-            Arb[ OccAnalyze.indice2] = &tmp;
-
-            // To delete precedent '!' carac, for don't have many '!'
-            old_node_index = OccAnalyze.indice2;
-
-
-        }
-        else
-        {
-            //do nothing
-        }
+        temp->carac = '!';
+    }
+    else
+    {
+        temp->carac = 0;
     }
 
+    temp->code       = 0;
+    temp->bits       = 0;
+    temp->occ        = Arb[ 0]->occ + Arb[ 1]->occ;
+    temp->gauche     = Arb[ 0];
+    temp->droite     = Arb[ 1];
+
+    Arb[ 0] = temp;
+
+    if( iteration != (size -2))
+    {
+        // delete Arb[1] and shift, Arb[1] was save droite in Arb[ 1]
+        new_size = ApiArbDeleteAndShift( new_size);
+    }
+
+    iteration = iteration + 1;
+
+    return( new_size);
 }
 
 /*******************************************************************************
@@ -216,7 +214,7 @@ void ApiArbCreateCode( struct noeud* element, int code, int niveau)
 * Return index of Arb[] where is the node
 *
 *******************************************************************************/
-int ApiArbFindSquare(struct noeud* Arb[], int size)
+int ApiArbFindRoot(struct noeud* Arb[], int size)
 {
     int iteration = 0;
 

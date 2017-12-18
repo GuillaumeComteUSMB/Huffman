@@ -20,9 +20,9 @@ struct noeud
 
 //===== PROTOTYPEs =============================================================
 struct noeud* ApiArbCreateLeaf( int* Occ, int index);
-void ApiArbCreateNode(struct noeud *Arb[], int size);
+int ApiArbCreateNode( struct noeud* Arb[], int new_size, int size);
 void ApiArbSortLeaf( int size);
-int ApiArbFindSquare(struct noeud* Arb[], int size);
+int ApiArbFindRoot(struct noeud* Arb[], int size);
 void ApiArbCreateCode( struct noeud* element, int code, int niveau);
 
 //===== END OF FILE ============================================================
