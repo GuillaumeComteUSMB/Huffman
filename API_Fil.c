@@ -150,11 +150,11 @@ void ApiFilReadAlphabetInFile( FILE* fichier, struct leading_c reading_alphabet[
 
     for( iteration = 0; iteration< NB_CARACTERES_ASCII; iteration++)
     {
-        temp_init = fread( &temp_init, sizeof(temp_init), 1, fichier);
+        fread( &temp_init, sizeof(temp_init), 1, fichier);
 
         reading_alphabet[ iteration].bits = temp_init;
 
-        temp_init = fread( &temp_init, sizeof(temp_init), 1, fichier);
+        fread( &temp_init, sizeof(temp_init), 1, fichier);
 
         reading_alphabet[ iteration].code = temp_init;
     }
