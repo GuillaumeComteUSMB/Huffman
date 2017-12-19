@@ -68,6 +68,8 @@ void CapCompressFile(char output_path[], char input_path[])
     {
         printf("\n***debug*** Error in writing file");
     }
+
+    ApiFilReadLeading( output_path);
 }
 
 //===== END OF FILE ============================================================
